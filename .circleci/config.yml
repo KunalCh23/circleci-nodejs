@@ -4,14 +4,15 @@ orbs:
   node: circleci/node@5.2.1
 
 jobs:
-  build_and_test:
-    executor: node/default
+jobs:
+  install-node-example:
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
-      - node/install-packages
-      - run:
-          name: Build app
-          command: yarn build
+      - node/install:
+          node-version: '16.13'
+      - run: node --version
       - persist_to_workspace:
           root: ~/project
           paths:
