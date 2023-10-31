@@ -19,7 +19,7 @@ jobs:
 
   push:
     docker:
-      - image: cimg/base
+      - image: circleci/node
     steps:
       - setup_remote_docker
       - run:
