@@ -11,6 +11,9 @@ jobs:
       - node/install:
           node-version: '16.13'
       - run: node --version
+      - run:
+          name: build
+          npm-run: build
       - persist_to_workspace:
           root: ~/project
           paths:
