@@ -1,24 +1,18 @@
 version: 2.1
-
-orbs:
-  node: circleci/node@5.1
-workflows:
-  build:
-    jobs:
-      - build
 jobs:
   build:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:12.13.0
     steps:
       - checkout
-      - node/install:
-          node-version: '16.13'
-      - run: node --version
       - run:
-          name: build
-          npm-run: build
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build app
+          command: npm run build
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t my-app .
