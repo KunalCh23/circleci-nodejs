@@ -16,12 +16,24 @@ jobs:
           name: Build Docker image
           command: |
             docker build -t $IMAGE_NAME:${CIRCLE_BUILD_NUM} .
+      - run:
+          name: Save Docker image
+          command: docker save -o image.tar $IMAGE_NAME:${CIRCLE_BUILD_NUM}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
 
   push:
     docker:
       - image: circleci/node
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - setup_remote_docker
+      - run:
+          name: Load Docker image
+          command: docker load -i /tmp/workspace/image.tar
       - run:
           name: Push Docker image to Docker Hub
           command: |
