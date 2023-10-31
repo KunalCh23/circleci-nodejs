@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1
+
 jobs:
   install-node-example:
     docker:
@@ -12,8 +13,7 @@ jobs:
           node-version: '16.13'
       - run: node --version
       - run:
-          name: build
-          npm-run: build
+          command: npm run build
       - persist_to_workspace:
           root: ~/project
           paths:
