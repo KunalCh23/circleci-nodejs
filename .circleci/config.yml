@@ -2,8 +2,12 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1
+workflows:
+  build:
+    jobs:
+      - build
 jobs:
-  install-node-example:
+  build:
     docker:
       - image: cimg/base:stable
     steps:
@@ -18,7 +22,3 @@ jobs:
           root: ~/project
           paths:
             - .
-workflows:
-  build:
-    jobs:
-      - install-node-example
