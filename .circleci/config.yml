@@ -2,17 +2,19 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1
-
-workflows:
-  build-and-test:
-    jobs:
-      - build:
-          executor: node/default
-          steps:
-            - checkout
-            - node/install
-            - run: npm run build
-            - persist_to_workspace:
-                root: ~/project
-                paths:
-                  - .
+jobs:
+  install-node-example:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: '16.13'
+      - run: node --version
+      - run:
+          name: build
+          npm-run: build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
