@@ -18,3 +18,7 @@ jobs:
           root: ~/project
           paths:
             - .
+workflows:
+  build:
+    jobs:
+      - install-node-example
